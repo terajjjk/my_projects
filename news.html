@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f2eb">
+    <title>Пульс — городская редакция</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: "DM Sans", sans-serif;
+            color: #202b29;
+            background: #f4f2eb;
+            --ink: #202b29;
+            --muted: #6d7772;
+            --line: #d8d9d1;
+            --red: #cb493c;
+            --green: #245c4a;
+            --paper: #f4f2eb;
+        }
+
+        * { box-sizing: border-box; }
+        [hidden] { display: none !important; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-width: 320px;
+            margin: 0;
+            background: var(--paper);
+        }
+
+        a { color: inherit; }
+
+        .wrap {
+            width: min(1220px, calc(100% - 56px));
+            margin: 0 auto;
+        }
+
+        .topline {
+            min-height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            border-bottom: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.1px;
+            text-transform: uppercase;
+        }
+
+        .topline p { margin: 0; }
+        .edition { color: var(--red); }
+
+        .masthead {
+            min-height: 98px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            flex: 0 0 auto;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            background: var(--red);
+            color: #fff;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 27px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .brand-name {
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 31px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(14px, 2.4vw, 30px);
+        }
+
+        nav a {
+            padding: 9px 0;
+            color: #34423e;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 150ms ease;
+        }
+
+        nav a:hover, nav a:focus-visible { color: var(--red); }
+
+        .search {
+            width: 178px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #9aa19b;
+        }
+
+        .search input {
+            width: 100%;
+            min-width: 0;
+            height: 36px;
+            padding: 0 4px;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--ink);
+            font: 500 12px "DM Sans", sans-serif;
+        }
+
+        .search input::placeholder { color: #77817c; }
+        .search:focus-within { border-color: var(--red); }
+
+        .search button {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 auto;
+            border: 0;
+            background: transparent;
+            color: var(--ink);
+            font-size: 19px;
+            cursor: pointer;
+        }
+
+        .lead {
+            display: grid;
+            grid-template-columns: 0.92fr 1.08fr;
+            min-height: 420px;
+            margin: 30px 0 0;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .lead-copy {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 26px clamp(24px, 5vw, 72px) 34px 0;
+        }
+
+        .kicker {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 0 0 20px;
+            color: var(--red);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        .kicker::before { width: 24px; height: 2px; background: var(--red); content: ""; }
+
+        h1, h2, h3, p { overflow-wrap: break-word; }
+
+        h1, .lead-copy h2, .story-title, .about h2 {
+            font-family: "Playfair Display", Georgia, serif;
+            font-weight: 700;
+        }
+
+        .lead-copy h1 {
+            margin: 0;
+            font-size: clamp(38px, 4.6vw, 62px);
+            line-height: 1.08;
+        }
+
+        .lead-summary {
+            max-width: 460px;
+            margin: 19px 0 0;
+            color: #52615b;
+            font-size: 15px;
+            line-height: 1.75;
+        }
+
+        .lead-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+            margin-top: 23px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .lead-meta strong { color: var(--ink); }
+
+        .lead-image {
+            position: relative;
+            min-height: 390px;
+            overflow: hidden;
+            background: #d5d8d0;
+        }
+
+        .lead-image img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: 390px;
+            object-fit: cover;
+            object-position: center 55%;
+        }
+
+        .image-label {
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            padding: 7px 10px;
+            background: #202b29e8;
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .section-heading {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .section-heading h2 {
+            margin: 0;
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 25px;
+        }
+
+        .filters { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+
+        .filters button {
+            padding: 8px 0;
+            border: 0;
+            border-bottom: 2px solid transparent;
+            background: transparent;
+            color: var(--muted);
+            font: 700 11px "DM Sans", sans-serif;
+            cursor: pointer;
+        }
+
+        .filters button[aria-pressed="true"] { border-color: var(--red); color: var(--ink); }
+        .filters button:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 270px;
+            gap: 50px;
+            padding-bottom: 58px;
+        }
+
+        .story-list { min-width: 0; }
+
+        .story {
+            display: grid;
+            grid-template-columns: 172px minmax(0, 1fr);
+            gap: 22px;
+            padding: 23px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .story-image {
+            width: 172px;
+            height: 118px;
+            object-fit: cover;
+            background: #d5d8d0;
+        }
+
+        .story-category {
+            margin: 1px 0 8px;
+            color: var(--green);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .story-title {
+            margin: 0;
+            font-size: 21px;
+            line-height: 1.25;
+        }
+
+        .story-title a { text-decoration: none; }
+        .story-title a:hover { color: var(--red); }
+
+        .story-summary {
+            margin: 8px 0 10px;
+            color: #59645f;
+            font-size: 12px;
+            line-height: 1.65;
+        }
+
+        .story time { color: var(--muted); font-size: 10px; }
+
+        .aside { padding-top: 24px; }
+
+        .aside-title {
+            margin: 0 0 14px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--ink);
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 21px;
+        }
+
+        .popular-item {
+            display: grid;
+            grid-template-columns: 32px 1fr;
+            gap: 12px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .popular-number {
+            color: var(--red);
+            font-family: "Playfair Display", Georgia, serif;
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .popular-item p { margin: 0; font-size: 13px; font-weight: 700; line-height: 1.5; }
+
+        .editor-note {
+            margin-top: 28px;
+            padding: 18px;
+            border-left: 3px solid var(--green);
+            background: #e9e9df;
+        }
+
+        .editor-note strong {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--green);
+            font-size: 10px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .editor-note p { margin: 0; color: #59645f; font-size: 12px; line-height: 1.65; }
+
+        .empty-state {
+            display: none;
+            padding: 32px 0;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: 40px;
+            padding: 34px 0 38px;
+            border-top: 1px solid var(--ink);
+        }
+
+        .about-label {
+            margin: 0 0 8px;
+            color: var(--red);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .about h2 { margin: 0; font-size: 31px; }
+        .about-copy { max-width: 600px; margin: 0; color: #52615b; font-size: 13px; line-height: 1.8; }
+
+        footer {
+            min-height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .wrap { width: min(100% - 40px, 720px); }
+            .masthead { min-height: auto; flex-wrap: wrap; gap: 14px 24px; padding: 20px 0; }
+            nav { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; }
+            .search { margin-left: auto; }
+            .lead { grid-template-columns: 1fr 1fr; min-height: 360px; }
+            .lead-image, .lead-image img { min-height: 360px; }
+            .lead-copy { padding-right: 22px; }
+            .content-grid { grid-template-columns: minmax(0, 1fr) 220px; gap: 28px; }
+            .story { grid-template-columns: 140px minmax(0, 1fr); gap: 16px; }
+            .story-image { width: 140px; height: 106px; }
+        }
+
+        @media (max-width: 640px) {
+            .wrap { width: calc(100% - 32px); }
+            .topline { font-size: 8px; letter-spacing: 0.7px; }
+            .masthead { gap: 14px; }
+            .brand-name { font-size: 27px; }
+            .brand-mark { width: 36px; height: 36px; }
+            .search { width: 138px; }
+            nav { gap: 20px; }
+            nav a { flex: 0 0 auto; font-size: 12px; }
+            .lead { grid-template-columns: 1fr; margin-top: 22px; }
+            .lead-copy { grid-row: 2; padding: 22px 0 26px; }
+            .lead-image { grid-row: 1; min-height: 250px; }
+            .lead-image img { min-height: 250px; max-height: 340px; }
+            .kicker { margin-bottom: 14px; }
+            .lead-copy h1 { font-size: clamp(36px, 10vw, 48px); }
+            .lead-summary { margin-top: 12px; font-size: 13px; }
+            .lead-meta { margin-top: 14px; }
+            .section-heading { align-items: flex-start; flex-direction: column; justify-content: center; gap: 7px; padding: 14px 0; }
+            .section-heading h2 { font-size: 23px; }
+            .filters { gap: 3px 15px; }
+            .content-grid { grid-template-columns: 1fr; gap: 20px; padding-bottom: 38px; }
+            .story { grid-template-columns: 104px minmax(0, 1fr); gap: 13px; padding: 17px 0; }
+            .story-image { width: 104px; height: 95px; }
+            .story-title { font-size: 17px; }
+            .story-summary { font-size: 11px; line-height: 1.5; }
+            .aside { padding-top: 4px; }
+            .popular-item p { font-size: 12px; }
+            .about { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
+            .about h2 { font-size: 28px; }
+            footer { align-items: flex-start; flex-direction: column; justify-content: center; padding: 12px 0; font-size: 9px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="topline">
+            <p>Редакционный макет · демонстрационные материалы</p>
+            <p class="edition">Выпуск № 18 &nbsp;·&nbsp; 13 октября 2026</p>
+        </div>
+
+        <header class="masthead">
+            <a class="brand" href="#top" aria-label="Пульс — на главную">
+                <span class="brand-mark" aria-hidden="true">П</span>
+                <span class="brand-name">Пульс</span>
+            </a>
+            <nav aria-label="Разделы сайта">
+                <a href="#latest">Главное</a>
+                <a href="#latest" data-nav-category="Город">Город</a>
+                <a href="#latest" data-nav-category="Культура">Культура</a>
+                <a href="#latest" data-nav-category="Среда">Среда</a>
+                <a href="#about">О нас</a>
+            </nav>
+            <form class="search" id="search-form" role="search">
+                <input id="search-input" type="search" placeholder="Найти новость" aria-label="Поиск по новостям">
+                <button type="submit" aria-label="Искать">⌕</button>
+            </form>
+        </header>
+
+        <main id="top">
+            <article class="lead">
+                <div class="lead-copy">
+                    <p class="kicker">Большой материал</p>
+                    <h1>Город меняет берега: что появится на набережной</h1>
+                    <p class="lead-summary">Пешеходный маршрут, новые места для отдыха и больше пространства у воды. Собрали главное о проекте обновления городской набережной.</p>
+                    <div class="lead-meta">
+                        <span><strong>Текст:</strong> редакция «Пульс»</span>
+                        <span>6 минут чтения</span>
+                    </div>
+                </div>
+                <div class="lead-image">
+                    <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&amp;fit=crop&amp;w=1400&amp;q=85" alt="Городская улица среди высоких зданий">
+                    <span class="image-label">Город · в фокусе</span>
+                </div>
+            </article>
+
+            <section id="latest" aria-labelledby="latest-title">
+                <div class="section-heading">
+                    <h2 id="latest-title">Свежий номер</h2>
+                    <div class="filters" role="group" aria-label="Фильтр новостей по разделу">
+                        <button type="button" data-filter="all" aria-pressed="true">Все</button>
+                        <button type="button" data-filter="Город" aria-pressed="false">Город</button>
+                        <button type="button" data-filter="Культура" aria-pressed="false">Культура</button>
+                        <button type="button" data-filter="Среда" aria-pressed="false">Среда</button>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="story-list" id="story-list">
+                        <article class="story" data-category="Город" data-search="город набережная прогулки вода маршрут">
+                            <img class="story-image" src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&amp;fit=crop&amp;w=520&amp;q=80" alt="Вечерний вид на городские улицы" loading="lazy">
+                            <div>
+                                <p class="story-category">Город</p>
+                                <h3 class="story-title"><a href="#about">Маршрут выходного дня: город пешком</a></h3>
+                                <p class="story-summary">Пять остановок, на которые стоит посмотреть внимательнее.</p>
+                                <time datetime="2026-10-13">Сегодня, 10:20</time>
+                            </div>
+                        </article>
+                        <article class="story" data-category="Культура" data-search="культура выставка музей художники искусство">
+                            <img class="story-image" src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&amp;fit=crop&amp;w=520&amp;q=80" alt="Яркая картина на выставке современного искусства" loading="lazy">
+                            <div>
+                                <p class="story-category">Культура</p>
+                                <h3 class="story-title"><a href="#about">Маленькие выставки с большим разговором</a></h3>
+                                <p class="story-summary">Знакомимся с независимыми галереями и их авторами.</p>
+                                <time datetime="2026-10-13">Сегодня, 09:45</time>
+                            </div>
+                        </article>
+                        <article class="story" data-category="Среда" data-search="среда парк деревья озеленение сквер природа">
+                            <img class="story-image" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&amp;fit=crop&amp;w=520&amp;q=80" alt="Солнечный свет в зелёном парке" loading="lazy">
+                            <div>
+                                <p class="story-category">Среда</p>
+                                <h3 class="story-title"><a href="#about">Как устроить зелёный уголок во дворе</a></h3>
+                                <p class="story-summary">Идеи для общего пространства, которые легко начать вместе.</p>
+                                <time datetime="2026-10-12">Вчера, 18:10</time>
+                            </div>
+                        </article>
+                        <p class="empty-state" id="empty-state">По вашему запросу ничего не нашлось.</p>
+                    </div>
+
+                    <aside class="aside" aria-label="Популярные темы">
+                        <h2 class="aside-title">Обсуждают</h2>
+                        <div class="popular-item"><span class="popular-number">01</span><p>Каким станет привычный путь до работы</p></div>
+                        <div class="popular-item"><span class="popular-number">02</span><p>Книжные места, где хочется задержаться</p></div>
+                        <div class="popular-item"><span class="popular-number">03</span><p>Новый взгляд на знакомые дворы</p></div>
+                        <div class="editor-note">
+                            <strong>От редакции</strong>
+                            <p>«Пульс» — учебный макет. Все материалы на странице созданы для примера.</p>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="about" id="about" aria-labelledby="about-title">
+                <div>
+                    <p class="about-label">Кто мы</p>
+                    <h2 id="about-title">О нас</h2>
+                </div>
+                <p class="about-copy">«Пульс» — независимая городская редакция о людях, местах и переменах вокруг нас. Мы собираем истории, которые помогают лучше узнать свой город, и рассказываем о них ясно, внимательно и без лишнего шума.</p>
+            </section>
+        </main>
+
+        <footer>
+            <span>© 2026 Пульс · Демонстрационный проект</span>
+            <a href="#top">Вернуться наверх ↑</a>
+        </footer>
+    </div>
+
+    <script>
+        const filterButtons = [...document.querySelectorAll("[data-filter]")];
+        const stories = [...document.querySelectorAll(".story")];
+        const searchForm = document.querySelector("#search-form");
+        const searchInput = document.querySelector("#search-input");
+        const emptyState = document.querySelector("#empty-state");
+        let activeCategory = "all";
+
+        function updateStories() {
+            const query = searchInput.value.trim().toLocaleLowerCase("ru");
+            let visibleCount = 0;
+
+            stories.forEach((story) => {
+                const matchesCategory = activeCategory === "all" || story.dataset.category === activeCategory;
+                const matchesQuery = !query || story.textContent.toLocaleLowerCase("ru").includes(query) || story.dataset.search.includes(query);
+                const isVisible = matchesCategory && matchesQuery;
+
+                story.hidden = !isVisible;
+                if (isVisible) visibleCount += 1;
+            });
+
+            emptyState.style.display = visibleCount ? "none" : "block";
+        }
+
+        filterButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                activeCategory = button.dataset.filter;
+                filterButtons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+                updateStories();
+            });
+        });
+
+        document.querySelectorAll("[data-nav-category]").forEach((link) => {
+            link.addEventListener("click", () => {
+                const category = link.dataset.navCategory;
+                const button = filterButtons.find((item) => item.dataset.filter === category);
+                if (button) button.click();
+            });
+        });
+
+        searchInput.addEventListener("input", updateStories);
+        searchForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            updateStories();
+            document.querySelector("#latest").scrollIntoView({ behavior: "smooth" });
+        });
+    </script>
+</body>
+</html>
