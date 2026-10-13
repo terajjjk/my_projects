@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#171a18">
+	<title>Майкл Де Санта | Досье Лос-Сантоса</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			color-scheme: dark;
+			font-family: "DM Sans", sans-serif;
+			color: #f3f0e6;
+			background: #171a18;
+			--lime: #d8ef54;
+			--muted: #a1a69b;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			min-width: 320px;
+			min-height: 100vh;
+			margin: 0;
+			background-image: linear-gradient(115deg, #171a18 0%, #20251f 52%, #1b201d 100%);
+		}
+
+		.page {
+			width: min(1120px, 100% - 48px);
+			min-height: 100vh;
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+		}
+
+		header {
+			min-height: 76px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 16px;
+			border-bottom: 1px solid #ffffff20;
+			color: var(--muted);
+			font-size: 11px;
+			font-weight: 700;
+			letter-spacing: 1.5px;
+			text-transform: uppercase;
+		}
+
+		.brand { color: var(--lime); }
+		.status { display: flex; align-items: center; gap: 9px; }
+		.status::before { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); content: ""; }
+
+		main {
+			flex: 1;
+			display: grid;
+			grid-template-columns: 0.9fr 1.1fr;
+			align-items: center;
+			gap: clamp(28px, 6vw, 80px);
+			padding: 52px 0;
+		}
+
+		.copy { position: relative; z-index: 1; animation: rise 650ms ease-out both; }
+
+		.index {
+			margin: 0 0 18px;
+			color: var(--lime);
+			font-size: 12px;
+			font-weight: 700;
+			letter-spacing: 2px;
+			text-transform: uppercase;
+		}
+
+		h1 {
+			margin: 0;
+			font-family: "Barlow Condensed", Impact, sans-serif;
+			font-size: clamp(64px, 10vw, 112px);
+			font-weight: 900;
+			line-height: 0.82;
+			text-transform: uppercase;
+		}
+
+		h1 span { display: block; color: var(--lime); }
+
+		.role {
+			margin: 26px 0 30px;
+			color: #d2d4cb;
+			font-size: 18px;
+		}
+
+		.facts {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 18px 24px;
+			max-width: 410px;
+			padding: 18px 0;
+			border-top: 1px solid #ffffff24;
+			border-bottom: 1px solid #ffffff24;
+		}
+
+		.fact-label {
+			display: block;
+			margin-bottom: 6px;
+			color: var(--muted);
+			font-size: 10px;
+			font-weight: 700;
+			letter-spacing: 1.3px;
+			text-transform: uppercase;
+		}
+
+		.fact-value { font-size: 14px; font-weight: 600; }
+
+		.details {
+			max-width: 410px;
+			margin-top: 18px;
+			color: #c6c9bf;
+			font-size: 14px;
+			line-height: 1.7;
+		}
+
+		.details[hidden] { display: none; }
+
+		button {
+			min-height: 48px;
+			margin-top: 24px;
+			padding: 0 18px;
+			border: 0;
+			border-radius: 4px;
+			background: var(--lime);
+			color: #171a18;
+			font: 700 14px "DM Sans", sans-serif;
+			cursor: pointer;
+			transition: transform 160ms ease, background-color 160ms ease;
+		}
+
+		button:hover { transform: translateY(-2px); background: #e4f984; }
+		button:focus-visible { outline: 3px solid #f3f0e6; outline-offset: 4px; }
+
+		figure {
+			position: relative;
+			min-width: 0;
+			height: min(72vh, 690px);
+			min-height: 420px;
+			margin: 0;
+			background: #242923;
+			animation: rise 750ms 100ms ease-out both;
+		}
+
+		figure::before {
+			position: absolute;
+			z-index: 1;
+			inset: 12px -12px -12px 12px;
+			border: 1px solid #d8ef5460;
+			content: "";
+			pointer-events: none;
+		}
+
+		figure img {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: center 35%;
+			filter: saturate(0.82) contrast(1.04);
+		}
+
+		figcaption {
+			position: absolute;
+			z-index: 2;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			padding: 48px 16px 14px;
+			background: linear-gradient(transparent, #111612d9);
+			color: #e7e9df;
+			font-size: 11px;
+			text-align: right;
+		}
+
+		figcaption a { color: inherit; text-underline-offset: 3px; }
+
+		footer {
+			min-height: 56px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 12px;
+			border-top: 1px solid #ffffff20;
+			color: var(--muted);
+			font-size: 10px;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+		}
+
+		@keyframes rise {
+			from { opacity: 0; transform: translateY(14px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		@media (max-width: 720px) {
+			.page { width: min(100% - 36px, 520px); }
+			header { min-height: 62px; font-size: 9px; }
+			main { grid-template-columns: 1fr; gap: 34px; padding: 42px 0 34px; }
+			h1 { font-size: clamp(66px, 18vw, 92px); }
+			.role { margin: 20px 0 24px; }
+			figure { grid-row: 1; height: min(58vh, 500px); min-height: 330px; }
+			.copy { grid-row: 2; }
+			footer { font-size: 8px; }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+		}
+	</style>
+</head>
+<body>
+	<div class="page">
+		<header>
+			<span class="brand">Los Santos / Архив</span>
+			<span class="status">Досье открыто</span>
+		</header>
+		<main>
+			<section class="copy" aria-labelledby="name">
+				<p class="index">Персонаж 01 &mdash; GTA V</p>
+				<h1 id="name">Michael<span>De Santa</span></h1>
+				<p class="role">Бывший грабитель банков. Вайнвуд, Лос-Сантос.</p>
+				<div class="facts">
+					<div><span class="fact-label">Имя</span><span class="fact-value">Майкл Таунли</span></div>
+					<div><span class="fact-label">Псевдоним</span><span class="fact-value">Де Санта</span></div>
+					<div><span class="fact-label">Занятие</span><span class="fact-value">Продюсер</span></div>
+					<div><span class="fact-label">Особый навык</span><span class="fact-value">Замедление времени</span></div>
+				</div>
+				<p class="details" id="details" hidden>Один из трёх главных героев Grand Theft Auto V. После переезда в Лос-Сантос Майкл пытается оставить криминальное прошлое позади, но новые события снова втягивают его в рискованные дела.</p>
+				<button id="details-button" type="button" aria-expanded="false" aria-controls="details">Открыть досье</button>
+			</section>
+			<figure>
+				<img src="https://static.wikia.nocookie.net/gtawiki/images/b/b3/Michael-GTAV-next.jpg/revision/latest?cb=20141119215031" alt="Майкл Де Санта из Grand Theft Auto V">
+				<figcaption><a href="https://gta.fandom.com/wiki/Michael_De_Santa" target="_blank" rel="noreferrer">Изображение: GTA Wiki</a></figcaption>
+			</figure>
+		</main>
+		<footer>
+			<span>Grand Theft Auto V</span>
+			<span>Rockford Hills, Los Santos</span>
+		</footer>
+	</div>
+	<script>
+		const detailsButton = document.querySelector("#details-button");
+		const details = document.querySelector("#details");
+
+		detailsButton.addEventListener("click", () => {
+			const isExpanded = detailsButton.getAttribute("aria-expanded") === "true";
+			detailsButton.setAttribute("aria-expanded", String(!isExpanded));
+			details.hidden = isExpanded;
+			detailsButton.textContent = isExpanded ? "Открыть досье" : "Свернуть досье";
+		});
+	</script>
+</body>
+</html>
